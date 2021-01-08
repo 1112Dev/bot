@@ -1,0 +1,38 @@
+﻿<div class="page-container fade-anim" ng-if="!showLoadingSpinner()">
+    <div class="role-selection-container">
+        <div>
+            <h1 focus-item class="page-title" ng-if="model.pageHeaderText" ng-bind="model.pageHeaderText"></h1>
+            <p focus-item ng-if="model.pageDescriptionText" ng-bind="model.pageDescriptionText"></p class="page-body">
+        </div>
+
+        <div class="role-container">
+
+            <span aria-hidden="true" class="role-selection-icon win-icon disable-left-click-text-selection" ng-bind="model.sharerRoleIcon | icon"></span>
+
+            <div class="sharer-role-content-container">
+                <!-- Passcode directive -->
+                <div passcode
+                     data-model="model.passcodeModel"
+                     data-code="{{ passcode }}"
+                     data-on-passcode-succeeded="onPasscodeSucceeded"
+                     data-on-passcode-error="onPasscodeError"></div>
+            </div>
+        </div>
+
+        <div class="role-container fade-anim" ng-if="canView">
+
+            <span aria-hidden="true" class="role-selection-icon win-icon disable-left-click-text-selection" ng-bind="model.viewerRoleIcon | icon"></span>
+            <div class="viewer-role-content-container">
+                <h2 focus-item class="text-title" ng-bind="model.viewerRoleHeaderText"></h2>
+                <p class="text-body" ng-bind="model.viewerRoleDescriptionText"></p>
+
+                <button focus-item class="btn btn-primary form-control" id="viewer-role-button" ng-click="onViewerRoleSelected()" ng-bind="model.viewerRoleButtonText"></button>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<div aria-live="polite">
+    <div ng-if="showLoadingSpinner()" loading-spinner size="large" class="loading-spinner absolute-center"></div>
+</div>

@@ -1,0 +1,34 @@
+﻿<div>
+    <h2 focus-item class="text-title page-title">{{ model.header }}</h2>
+    <p class="text-body page-body">{{ model.description | compassFormat: {'0' : config.passcodeLength} }}</p>
+    <div class="clearfix">
+        <label class="text-body">{{ model.code }}</label>
+        <input id="{{ passcodeInputFieldId }}"
+               ng-disabled="isRetrievingPasscodeData"
+               aria-label="{{ model.description | compassFormat: {'0' : config.passcodeLength} }} {{ hasError ? model.invalidCode : ''}} {{model.placeholder}}"
+               numeric-input
+               class="form-control"
+               ng-class="{ 'has-error': hasError }"
+               type="text"
+               ng-model="code"
+               ng-change="resetError()"
+               maxlength="{{ config.passcodeLength }}"
+               placeholder="{{ starPlaceholder }}"
+               ng-keypress="keypress($event, code)"
+               focus-item />
+        <p focus-item id="{{ passcodeErrorFieldId }}" ng-show="hasError" class="text-body fade-anim alert alert-error">{{ model.invalidCode }}</p>
+
+        <button focus-item class="btn btn-primary form-control spacer-32-bottom"
+                id="passcode-submit-button"
+                ng-click="sendCodeClicked(code)"
+                ng-disabled="!isValid(code) || hasError || isRetrievingPasscodeData">
+            {{ model.submit }}
+        </button>
+
+        <div ng-if="model.startOver.text !== ''" aria-label="{{model.startOver.text}}" ng-click="captureTelemetry(model.startOver)" role="link" tabindex="-1">
+            <a href="{{ model.startOver.url }}" focus-item>
+                {{ model.startOver.text }}
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+﻿<div id="{{ userPromptDialogContainerId }}">
+    <h1 focus-item ng-class="{'dialog-title text-subtitle' : isDialog, 'page-title text-title': !isDialog}" ng-if="model.header">{{ model.header }}</h1>
+    <div>
+        <img ng-if="showMicrosoftLogo" src="/Content/Images/Microsoft.png" aria-hidden="true" />
+    </div>
+    <div focus-item role="region" id="{{ userPromptDescriptionId }}" class="text-body page-body" ng-if="model.paragraphs">
+        <p class="text-body spacer-20-bottom" ng-repeat="paragraph in model.paragraphs" ng-bind-html="paragraph | compassFormat : compassFilterValueMap"></p>
+    </div>
+    <ul role="list" ng-if="model.links && model.links.length > 0">
+        <li ng-repeat="link in model.links track by $index">
+            <a focus-item role="link" aria-label="{{link.text}}" href="{{ link.url }}" target="_blank">{{ link.text }}</a>
+        </li>
+    </ul>
+
+    <label ng-if="model.checkboxText && showCheckbox">
+        <input focus-item aria-label="{{model.checkboxText}}" type="checkbox" class="user-prompt-checkbox" role="checkbox" ng-model="isChecked.value" />
+        {{model.checkboxText}}
+    </label>
+
+    <div class="pull-left loading-spinner" loading-spinner ng-if="showSpinner" size="medium"></div>
+    <div class="btn-group absolute-bottom">
+        <button focus-item ng-if="model.accept" id="user-prompt-allow-btn" class="btn btn-primary pull-left" ng-click="accept()">
+            {{ model.accept }}
+        </button>
+        <button focus-item ng-if="model.cancel" id="user-prompt-cancel-btn" class="btn btn-default" ng-class="{'pull-left': !model.accept, 'pull-right': model.accept}" ng-click="cancel()">
+            {{ model.cancel }}
+        </button>
+    </div>
+</div>
